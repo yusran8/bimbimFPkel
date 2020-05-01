@@ -1,0 +1,44 @@
+<?php
+
+// var_dump($result);
+if ($result->count() > 0) {
+?>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            
+                <br>
+                <!-- <td colspan="12">Results quantity: <?php echo $result->count(); ?></td> -->
+                <?php echo $this->tag->linkTo(["/user/profile", "Back", 'class' => 'btn btn-danger']); ?>
+                <br>
+                <br>
+            <tr>
+                <th>Mata Pelajaran</th>
+
+                <th>Pengajar</th>
+                <th>Ruang</th>
+                <th>Waktu</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="13">Results quantity: <?php echo $result->count(); ?></td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <?php foreach ($result as $data) { ?>
+                <tr>
+                    <td><?php echo $data->mapel; ?></td>
+
+                    <td><?php echo $data->pengajar; ?></td>
+                    <td><?php echo $data->ruang; ?></td>
+                    <td><?php echo $data->waktu; ?></td>
+                    <td><?= $this->tag->linkTo(["user/takeclass/$data->id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Ambil Kelas', "class" => "btn btn-primary"]); ?></td>
+
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+<?php
+}

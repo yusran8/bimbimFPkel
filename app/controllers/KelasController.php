@@ -1,0 +1,179 @@
+<?php
+declare(strict_types=1);
+
+use Phalcon\Di;
+use Phalcon\Mvc\Model;
+use Phalcon\Mvc\Model\Query;
+use Phalcon\Mvc\Model\Manager;
+use Phalcon\Http\Request;
+use Phalcon\Mvc\View;
+use App\Forms\AddclassForm;
+
+class KelasController extends ControllerBase
+{
+
+    public $form;
+    public $kelas;
+    public function initialize()
+    {
+
+        $this->authorized();
+        $this->form = new AddclassForm();
+        $this->kelas = new Kelas();
+    }
+
+    public function indexAction()
+    {
+        $query = $this->modelsManager->createQuery('SELECT * FROM Kelas');
+
+        $result = $query->execute();
+        $this->view->setVar('result', $result);
+
+    }
+
+    // public function allClassAction(){
+    //     $query = $this->modelsManager->createQuery('SELECT * FROM Kelas');
+
+    //     $result = $query->execute();
+    //     $this->view->setVar('result', $result);
+    // }
+
+    public function addClassAction(){
+        $this->tag->setTitle('BIMBIM::Tambah Kelas');
+        $this->view->form = new AddclassForm();
+
+    }
+
+    public function addClassSubmitAction(){
+
+        $mapel = $this->request->get('mapel');
+        $ruang = $this->request->get('ruang');
+        $waktu = $this->request->get('waktu');
+
+        $this->kelas->setMapel($mapel);
+        $this->kelas->setPengajar($this->session->get('AUTH_ID'));
+        $this->kelas->setRuang($ruang);
+        $this->kelas->setWaktu($waktu);
+
+        $this->form->bind($_POST, $this->kelas);
+
+        if (!$this->form->isValid()) {
+            foreach ($form->getMessages() as $message) {
+                $this->flash->error($message);
+                $this->dispatcher->forward([
+                    'controller' => $this->router->getControllerName(),
+                    'action'     => 'addClass',
+                ]);
+                return;
+            }
+        }
+        if (!$this->kelas->save()) {
+            foreach ($this->kelas->getMessages() as $m) {
+                $this->flash->error($m);
+                $this->dispatcher->forward([
+                    'controller' => $this->router->getControllerName(),
+                    'action'     => 'addClass',
+                ]);
+                return;
+            }
+        }
+
+        $this->flash->success('kelas dibuat');
+        return $this->dispatcher->forward(array(
+            'for' => 'take',
+            'controller' => 'user',
+            'action' => 'takeclass',
+            'id' => implode('/' ,$this->kelas->id)
+        ));
+        // return $this->response->redirect('user/profile');
+
+        $this->view->disable();
+
+
+
+    }
+
+    public function editAction($classId){
+        //if(!$this->request->isPost()){
+      
+        
+        $conditions = ['id'=>$classId];
+        $this->kelas = Kelas::findFirst([
+            'conditions' => 'id=:id:',
+            'bind' => $conditions,
+        ]);
+
+        $this->view->form = new AddclassForm($this->kelas, [
+            "edit" => true
+        ]);
+        
+    }
+    
+    /**
+     * Edit Kelas Action Submit
+     * @method: POST
+     * @param: title
+     * @param: description
+     */
+
+    public function editSubmitAction(){
+        if (!$this->request->isPost()) {  
+            return $this->response->redirect('user/profile');
+        }
+        $id = $this->request->getPost('id', 'int');
+        $this->kelas = Kelas::findFirstById($id);
+
+        $mapel = $this->request->getPost('mapel');
+        $ruang = $this->request->getPost('ruang');
+        $waktu = $this->request->getPost('waktu');
+        $pengajar = $this->session->get('AUTH_ID');
+
+        $this->kelas->setMapel($mapel);
+        $this->kelas->setPengajar($pengajar);
+        $this->kelas->setRuang($ruang);
+        $this->kelas->setWaktu($waktu);
+
+        $success = $this->kelas->update();
+
+        if($success){
+            $this->flashSession->success("Kelas telah diupdate");;
+            return $this->response->redirect('user/profile');
+        } else {
+            $this->flashSession->error("Gagal mengupdate Kelas");
+            return $this->response->redirect('kelas/edit/'.$id);
+        }
+        
+        
+        
+    }
+
+    public function deleteAction($classId){
+        $conditions = ['id'=>$classId];
+        $this->kelas = Kelas::findFirst([
+            'conditions' => 'id=:id:',
+            'bind' => $conditions,
+        ]);
+        if ($this->kelas->delete() === false) {
+            $messages = $this->kelas->getMessages();
+            foreach ($messages as $message) {
+                $this->flash->error($message);
+            }
+        } else {
+            return $this->response->redirect('user/profile');
+        }
+    }
+
+    public function userAction(){
+        
+        $query = $this->modelsManager->createQuery('SELECT * FROM Ambil');
+
+        $result = $query->execute();
+        $this->view->setVar('result', $result);
+
+
+    }
+
+    
+
+}
+

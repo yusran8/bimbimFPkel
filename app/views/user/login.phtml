@@ -1,0 +1,44 @@
+<div class="container">
+<h2>Login</h2>
+<p><?php echo $this->flashSession->output() ?> </p>
+
+<?php echo $this->tag->form("user/login/submit"); ?>
+
+    <div class="form-group">
+            <label for="id">ID</label>
+            <?php echo $form->render('id'); ?>
+        </div>
+
+    <div class="form-group">
+            <label for="password">Password</label>
+            <?php echo $form->render('password'); ?>
+        </div>
+
+    <div class="form-group">
+            
+            <?php echo $form->render('submit'); ?>
+        </div>
+    </form>
+    </p>
+    </div>
+
+
+<!-- <h2>Login</h2>
+
+<?php //echo $this->tag->form("user/login"); ?>
+
+    <p div class="form-group">
+        <label for="studentid">Student ID</label>
+        <?php //echo $this->tag->textField(["studentid", "class" => "form-control"]); ?>
+    </p>
+
+    <p div class="form-group">
+        <label for="pass">Password</label>
+        <?php// echo $this->tag->passwordField(["pass",  "class" => "form-control"]); ?>
+    </p>
+
+    <p div class="form-group">
+        <?php //echo $this->tag->submitButton(["Login",  "class" => "btn btn-primary"]); ?>
+    </p>
+
+</form> -->

@@ -1,0 +1,30 @@
+<div class="container">
+    <h2>Edit Kelas</h2>
+
+    <p><?php echo $this->flashSession->output() ?></p>
+
+    <?php echo $this->tag->form("kelas/edit/submit"); ?>
+
+        <div class="form-group">
+            <label for="mapel">Mata Pelajaran</label>
+            <?php echo $form->render('mapel'); ?>
+        </div>
+
+        <div class="form-group">
+            <label for="ruang">Ruangan</label>
+            <?php echo $form->render('ruang'); ?>
+        </div>
+
+        <div class="form-group">
+            <label for="waktu">Waktu</label>
+            <?php echo $form->render('waktu'); ?>
+        </div>
+
+        <div class="form-group">
+            <?php echo $form->render('submit'); ?>
+        </div>
+
+        <?= $form->render('id'); ?>
+
+    </form>
+</div>
