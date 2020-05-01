@@ -77,17 +77,17 @@ class KelasController extends ControllerBase
                 return;
             }
         }
-
-        $this->flash->success('kelas dibuat');
+        $this->view->disable();
+        $this->flashSession->success('kelas berhasil dibuat');
         // return $this->dispatcher->forward(array(
         //     'for' => 'take',
         //     'controller' => 'user',
         //     'action' => 'takeclass',
         //     'id' => implode('/' ,$this->kelas->id)
         // ));
-        return $this->response->redirect('user/profile');
+        return $this->response->redirect('kelas/addClass');
 
-        $this->view->disable();
+        
 
 
 

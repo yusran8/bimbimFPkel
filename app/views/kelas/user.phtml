@@ -1,5 +1,8 @@
-<?php
 
+<?php
+if($this->session->get('AUTH_ROLE')=='guru'){
+    echo $this->tag->linkTo(["/kelas/addClass", "Buat Kelas Baru", 'class' => 'btn btn-success']);
+}
 // var_dump($result);
 if ($result->count() > 0) {
 ?>
@@ -9,9 +12,7 @@ if ($result->count() > 0) {
                 <br>
                 <!-- <td colspan="12">Results quantity: <?php echo $result->count(); ?></td> -->
                 
-                <?php if($this->session->get('AUTH_ROLE')=='guru'){
-                    echo $this->tag->linkTo(["/kelas/addClass", "Buat Kelas Baru", 'class' => 'btn btn-success']);
-                } ?>
+                
                 <br>
                 <br>
             <tr>
@@ -42,12 +43,18 @@ if ($result->count() > 0) {
                         echo $this->tag->linkTo(["kelas/delete/$data->id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Hapus Kelas', "class" => "btn btn-danger"]); 
                     }
                     else {
-                       echo $this->tag->linkTo(["user/unenroll/$data->id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Batal Ambil', "class" => "btn btn-danger"]);} ?></td>
+                       echo $this->tag->linkTo(["user/unenroll/$data->kelas_id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Batal Ambil', "class" => "btn btn-danger"]);} ?></td>
 
                 </tr>
             <?php } ?>
         </tbody>
     </table>
-    <?php echo $this->tag->linkTo(["/user/profile", "Back", 'class' => 'btn btn-danger']); ?>
+    
 <?php
 }
+else{
+?>
+    <h2 align="center">Tidak Ada Kelas</h2>
+    <?php
+}
+echo $this->tag->linkTo(["/user/profile", "Back", 'class' => 'btn btn-danger']);

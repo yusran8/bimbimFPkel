@@ -24,6 +24,8 @@
             <?php echo $form->render('submit'); ?>
         </div>
 
+        <?php echo $this->tag->linkTo(["user/profile", '<i class="fa fa-sign-out" aria-hidden="true"></i> Batal', "class" => "btn btn-danger"]); ?>
+
         <?= $form->render('id'); ?>
 
     </form>

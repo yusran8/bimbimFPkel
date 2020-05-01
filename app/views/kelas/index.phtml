@@ -34,8 +34,10 @@ if ($result->count() > 0) {
                     <td><?php echo $data->pengajar; ?></td>
                     <td><?php echo $data->ruang; ?></td>
                     <td><?php echo $data->waktu; ?></td>
-                    <td><?= $this->tag->linkTo(["user/takeclass/$data->id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Ambil Kelas', "class" => "btn btn-primary"]); ?></td>
-
+                    
+                    <td><?php if($this->session->get('AUTH_ROLE')=='siswa'){
+                    echo $this->tag->linkTo(["user/takeclass/$data->id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Ambil Kelas', "class" => "btn btn-primary"]); }?></td>
+                    
                 </tr>
             <?php } ?>
         </tbody>

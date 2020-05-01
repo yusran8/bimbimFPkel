@@ -19,7 +19,7 @@ $router->add('/kelas/delete/{id}', ['controller' => 'kelas', 'action' => 'delete
 $router->add('/kelas/edit/{id}', ['controller' => 'kelas', 'action' => 'edit']);
 $router->add('/kelas/edit/submit', ['controller' => 'kelas', 'action' => 'editSubmit']);
 
-$router->add('/user/takeclass/:id', ['controller' => 'user', 'action' => 'takeclass'])->setName('take');
+$router->add('/user/takeclass/{id}', ['controller' => 'user', 'action' => 'takeclass']);
 $router->add('/user/unenroll/{id}', ['controller' => 'user', 'action' => 'unenroll']);
 
 $router->add('/kelas/user', ['controller' => 'kelas', 'action' => 'user']);
