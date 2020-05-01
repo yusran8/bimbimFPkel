@@ -38,9 +38,11 @@ if ($result->count() > 0) {
                     <td><?php echo $data->ruang; ?></td>
                     <td><?php echo $data->waktu; ?></td>
                     <td><?php if($this->session->get('AUTH_ROLE')=='guru'){
-                        echo $this->tag->linkTo(["kelas/edit/$data->kelas_id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Edit Kelas', "class" => "btn btn-primary"]); 
-                    }; ?>
-                    <?= $this->tag->linkTo(["user/unenroll/$data->kelas_id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Batal Ambil', "class" => "btn btn-danger"]); ?></td>
+                        echo $this->tag->linkTo(["kelas/edit/$data->id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Edit Kelas', "class" => "btn btn-primary"]);
+                        echo $this->tag->linkTo(["kelas/delete/$data->id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Hapus Kelas', "class" => "btn btn-danger"]); 
+                    }
+                    else {
+                       echo $this->tag->linkTo(["user/unenroll/$data->id", '<i class="fa fa-sign-out" aria-hidden="true"></i> Batal Ambil', "class" => "btn btn-danger"]);} ?></td>
 
                 </tr>
             <?php } ?>

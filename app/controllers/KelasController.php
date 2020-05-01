@@ -79,13 +79,13 @@ class KelasController extends ControllerBase
         }
 
         $this->flash->success('kelas dibuat');
-        return $this->dispatcher->forward(array(
-            'for' => 'take',
-            'controller' => 'user',
-            'action' => 'takeclass',
-            'id' => implode('/' ,$this->kelas->id)
-        ));
-        // return $this->response->redirect('user/profile');
+        // return $this->dispatcher->forward(array(
+        //     'for' => 'take',
+        //     'controller' => 'user',
+        //     'action' => 'takeclass',
+        //     'id' => implode('/' ,$this->kelas->id)
+        // ));
+        return $this->response->redirect('user/profile');
 
         $this->view->disable();
 
@@ -164,12 +164,22 @@ class KelasController extends ControllerBase
     }
 
     public function userAction(){
-        
-        $query = $this->modelsManager->createQuery('SELECT * FROM Ambil');
+        if($this->session->get('AUTH_ROLE')=='siswa'){
+            $query = $this->modelsManager->createQuery('SELECT * FROM Ambil where siswa=:siswa:');
 
-        $result = $query->execute();
-        $this->view->setVar('result', $result);
+            $result = $query->execute([
+                'siswa' => $this->session->get('AUTH_ID'),
+            ]);
+            $this->view->setVar('result', $result);
+        }
+        else {
+            $query = $this->modelsManager->createQuery('SELECT * FROM Kelas where pengajar= :pengajar:');
 
+            $result = $query->execute([
+                'pengajar' => $this->session->get('AUTH_ID'),
+            ]);
+            $this->view->setVar('result', $result);
+        }
 
     }
 
