@@ -137,13 +137,16 @@ class KelasController extends ControllerBase
         //     'bind' => $conditions2,
         // ]);
         // $ambil->delete();
-        // $ambil = Ambil::find([
-        //     'kelas_id = ?1',
-        //     'bind' => [
+        $ambil = Ambil::find([
+            'kelas_id = ?1',
+            'bind' => [
                 
-        //         1 => $classId,
-        //     ],
-        // ]);
+                1 => $classId,
+            ],
+        ]);
+        foreach ($ambil as $value){
+            $value->delete();
+        }
         // if($ambil->delete()===false){
         //     $messages = $ambil->getMessages();
         //     foreach ($messages as $message) {

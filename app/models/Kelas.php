@@ -15,7 +15,7 @@ class Kelas extends Model
     public function initialize(){
         $this->hasMany(
             'id',
-            'Ambil',
+            Ambil::class,
             'kelas',
             // [
             //     'foreignKey' => [

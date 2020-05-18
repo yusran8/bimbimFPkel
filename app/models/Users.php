@@ -18,7 +18,7 @@ class Users extends Model
     public function initialize(){
         $this->hasMany(
             'id',
-            'Ambil',
+            Ambil::class,
             'siswa',
             // [
             //     'foreignKey' => [
