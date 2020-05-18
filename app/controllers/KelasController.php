@@ -31,13 +31,6 @@ class KelasController extends ControllerBase
 
     }
 
-    // public function allClassAction(){
-    //     $query = $this->modelsManager->createQuery('SELECT * FROM Kelas');
-
-    //     $result = $query->execute();
-    //     $this->view->setVar('result', $result);
-    // }
-
     public function addClassAction(){
         $this->tag->setTitle('BIMBIM::Tambah Kelas');
         $this->view->form = new AddclassForm();
@@ -79,23 +72,13 @@ class KelasController extends ControllerBase
         }
         $this->view->disable();
         $this->flashSession->success('kelas berhasil dibuat');
-        // return $this->dispatcher->forward(array(
-        //     'for' => 'take',
-        //     'controller' => 'user',
-        //     'action' => 'takeclass',
-        //     'id' => implode('/' ,$this->kelas->id)
-        // ));
+       
         return $this->response->redirect('kelas/addClass');
-
-        
-
-
 
     }
 
     public function editAction($classId){
         //if(!$this->request->isPost()){
-      
         
         $conditions = ['id'=>$classId];
         $this->kelas = Kelas::findFirst([
@@ -142,9 +125,7 @@ class KelasController extends ControllerBase
             $this->flashSession->error("Gagal mengupdate Kelas");
             return $this->response->redirect('kelas/edit/'.$id);
         }
-        
-        
-        
+          
     }
 
     public function deleteAction($classId){

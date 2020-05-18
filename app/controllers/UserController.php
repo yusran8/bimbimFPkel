@@ -29,27 +29,6 @@ class UserController extends ControllerBase
           if (!$this->request->isPost()) {
             return $this->response->redirect('user/login');
         }
-
-        # https://docs.phalconphp.com/en/3.3/security#csrf
-
-        //Validate CSRF token
-        // if (!$this->security->checkToken()) {
-        //     $this->flashSession->error("Invalid Token");
-        //     return $this->response->redirect('user/login');
-        // }
-
-        //$this->loginForm->bind($_POST, $user);
-        // check form validation
-        // if (!$this->loginForm->isValid()) {
-        //     foreach ($this->loginForm->getMessages() as $message) {
-        //         $this->flashSession->error($message);
-        //         $this->dispatcher->forward([
-        //             'controller' => $this->router->getControllerName(),
-        //             'action'     => 'login',
-        //         ]);
-        //         return;
-        //     }
-        // }
         
         // login with database
         $id   = $this->request->getPost('id');
@@ -119,18 +98,7 @@ class UserController extends ControllerBase
         }
 
         $form->bind($_POST, $user);
-        // check form validation
-
-        // $user->assign(
-        //     $this->request->getPost(),
-        //     [
-        //         'name',
-        //         'id',
-        //         'role',
-        //         'password'
-
-        //     ]
-        // );
+       
         if (!$form->isValid()) {
             foreach ($form->getMessages() as $message) {
                 $this->flash->error($message);
@@ -163,25 +131,6 @@ class UserController extends ControllerBase
                 return;
             }
         }
-
-        // $success = $user->save();
-        
-
-        // if($success) {
-        //     echo 'acoount registered';
-        //     $this->view->disable();
-        // }
-
-        // $this->view->message = $message;
-
-        /**
-         * Send Email
-         */
-        // $params = [
-        //     'name' => $this->request->getPost('name'),
-        //     'link' => "http://localhost/_Phalcon/demo-app2/signup"
-        // ];
-        // $mail->send($this->request->getPost('email', ['trim', 'email']), 'signup', $params);
 
         $this->flashSession->success('Thanks for registering!');
         return $this->response->redirect('user/register');
