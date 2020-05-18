@@ -24,14 +24,17 @@
                         <a class="nav-link" href="/user/profile">Tim</a>
                     </li> -->
                 </ul>
+                
 
                 <ul class="nav navbar-nav ml-auto">
                 <?php
                     if ($this->session->has('AUTH_ID')){
-                        echo"<li class=\"nav-item\">";
+                        echo"<li class=\"nav-item dropdown\">";
+                        
                         echo $this->tag->linkTo([
                             "/user/profile",
-                            '<span class="fas fa-user"></span> Profile',
+                            $this->session->get('AUTH_NAME'),
+                            // '<span class="fas fa-user"></span> $this->session->get(\'AUTH_NAME\')',
                             "class" => "nav-link"
                         ]);
                         

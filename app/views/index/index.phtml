@@ -13,4 +13,11 @@
        
     </div>
 
+<br><br><br>
+
+<?php
+    if($this->session->has('AUTH_ID')){
+        echo $this->tag->linkTo(["/user/profile", "Kelola Kelas", 'class' => 'btn btn-primary ']);
+    }
+
 

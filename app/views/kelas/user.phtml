@@ -26,9 +26,11 @@ if ($result->count() > 0) {
             </tr>
         </thead>
         <tfoot>
+        
             <tr>
-                <td colspan="13">Results quantity: <?php echo $result->count(); ?></td>
+                <td colspan="13">Jumlah Kelas: <?php echo $result->count(); ?></td>
             </tr>
+            
         </tfoot>
         <tbody>
             <?php foreach ($result as $data) { ?>
@@ -57,4 +59,13 @@ else{
     <h2 align="center">Tidak Ada Kelas</h2>
     <?php
 }
+
+if($this->session->get('AUTH_ROLE')=='guru'){ 
+    $tanggungan = 20;
+    echo "Tanggungan Mengajar: ";
+    echo $tanggungan - $result->count();
+}?>
+<br>
+<br>
+<?php
 echo $this->tag->linkTo(["/user/profile", "Back", 'class' => 'btn btn-danger']);

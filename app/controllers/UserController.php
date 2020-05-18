@@ -2,9 +2,11 @@
 declare(strict_types=1);
 use App\Forms\LoginForm;
 use App\Forms\RegisterForm;
+use App\Forms\ChangepassForm;
 use Phalcon\Http\Request;
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Model;
+use Phalcon\Mvc\View;
 
 
 class UserController extends ControllerBase
@@ -13,6 +15,11 @@ class UserController extends ControllerBase
     public function indexAction()
     {
         
+    }
+    public function initialize()
+    {
+
+        $this->user = new Users();
     }
 
     public function loginAction(){
@@ -138,6 +145,108 @@ class UserController extends ControllerBase
         $this->view->disable();
     }
 
+    public function changepassAction(){
+        // $this->tag->setTitle('BIMBIM::Register');
+        
+        // $this->view->form = new ChangepassForm();
+        
+        $conditions = ['id'=>$this->session->get('AUTH_ID')];
+        $this->user = Users::findFirst([
+            'conditions' => 'id=:id:',
+            'bind' => $conditions,
+        ]);
+        $this->view->form = new ChangepassForm();
+    }
+        
+    
+     /**
+     * Edit Kelas Action Submit
+     * @method: POST
+     * @param: title
+     * @param: description
+     */
+
+    public function changepassSubmitAction(){
+        // $form = new ChangepassForm(); 
+        // $user = new Users();
+        // $request = new Request();
+        
+        // // check request
+        // if (!$this->request->isPost()) {
+        //     return $this->response->redirect('user/changepass');
+        // }
+
+        // $form->bind($_POST, $user);
+       
+        // if (!$form->isValid()) {
+        //     foreach ($form->getMessages() as $message) {
+        //         $this->flash->error($message);
+        //         $this->dispatcher->forward([
+        //             'controller' => $this->router->getControllerName(),
+        //             'action'     => 'changepass',
+        //         ]);
+        //         return;
+        //     }
+        // }
+        
+        
+        // # Doc :: https://docs.phalconphp.com/en/3.3/security
+        // $user->setPassword($this->security->hash($this->request->getPost('password')));
+        // $user->setName($this->request->getPost('name'));
+        // $user->setId($this->request->getPost('id'));
+        // $user->setRole($this->request->getPost('role'));
+        // $user->setActive(1);
+        // //$user->setCreated(time());
+        // //$user->setUpdated(time());
+        
+        // # Doc :: https://docs.phalconphp.com/en/3.3/db-models#create-update-records
+        // if (!$user->save()) {
+        //     foreach ($user->getMessages() as $m) {
+        //         $this->flashSession->error($m);
+        //         $this->dispatcher->forward([
+        //             'controller' => $this->router->getControllerName(),
+        //             'action'     => 'changepass',
+        //         ]);
+        //         return;
+        //     }
+        // }
+
+        // $this->flashSession->success('Thanks for registering!');
+        // return $this->response->redirect('user/changepass');
+
+        // $this->view->disable();
+        if (!$this->request->isPost()) {  
+            return $this->response->redirect('user/profile');
+        }
+        $id = $this->session->get('AUTH_ID');
+        $this->user = Users::findFirstById($id);
+        
+
+        $password = $this->request->getPost('password');
+        $id = $this->session->get('AUTH_ID');
+        $name = $this->session->get('AUTH_NAME');
+        $role = $this->session->get('AUTH_ROLE');
+        
+
+        
+        $this->user->setId($id);
+        $this->user->setName($name);
+        $this->user->setRole($role);
+        $this->user->setPassword($this->security->hash($password));
+
+        $success = $this->user->update();
+
+        if($success){
+            $this->flashSession->success("Password telah diganti");;
+            
+            return $this->response->redirect('user/changepass');
+        } else {
+            $this->flashSession->error("Gagal mengganti password");
+            return $this->response->redirect('user/changepass');
+        }
+          
+    }
+
     public function profileAction()
     {
         $this->authorized();
@@ -171,6 +280,7 @@ class UserController extends ControllerBase
 
         $ambil->save();
         $this->flashSession->success('Kelas berhasil diambil');
+        $this->view->disable();
         return $this->response->redirect('user/profile');
 
     }
@@ -187,10 +297,11 @@ class UserController extends ControllerBase
         if ($ambil->delete() === false) {
             $messages = $ambil->getMessages();
             foreach ($messages as $message) {
-                $this->flash->error($message);
+                $this->flashSession->error($message);
             }
         } else {
-            return $this->response->redirect('user/profile');
+            $this->flashSession->success('Pembatalan pengambilan kelas berhasil');
+            $this->response->redirect('kelas/user');
         }
         
     }

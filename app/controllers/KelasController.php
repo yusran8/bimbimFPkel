@@ -8,6 +8,7 @@ use Phalcon\Mvc\Model\Manager;
 use Phalcon\Http\Request;
 use Phalcon\Mvc\View;
 use App\Forms\AddclassForm;
+use Phalcon\Paginator\Adapter\NativeArray as ArrayPaginator;
 
 class KelasController extends ControllerBase
 {
@@ -25,7 +26,7 @@ class KelasController extends ControllerBase
     public function indexAction()
     {
         $query = $this->modelsManager->createQuery('SELECT * FROM Kelas');
-
+        
         $result = $query->execute();
         $this->view->setVar('result', $result);
 
@@ -125,6 +126,7 @@ class KelasController extends ControllerBase
             $this->flashSession->error("Gagal mengupdate Kelas");
             return $this->response->redirect('kelas/edit/'.$id);
         }
+        
           
     }
 
@@ -162,6 +164,23 @@ class KelasController extends ControllerBase
             $this->view->setVar('result', $result);
         }
 
+    }
+
+    public function searchAction() {
+        $searched = $this->request->get('search');
+        
+        $query = $this->modelsManager->createQuery("SELECT * FROM Kelas where mapel LIKE '%" . $searched. "%' ");
+
+        $result = $query->execute();
+        $this->view->setVar('result', $result);
+
+        // $searched = $this->request->get('search');
+        // if ($searched !== null) {
+        //     $this->kelas = Kelas::find("mapel LIKE '%" . $searched. "%' ");
+        //     // var_dump($questions['question_id']); die();
+        //     $this->view->kelas = $this->kelas;
+        // }
+        //$this->view->searched = $searched;
     }
 
     

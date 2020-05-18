@@ -24,6 +24,8 @@ $router->add('/user/unenroll/{id}', ['controller' => 'user', 'action' => 'unenro
 
 $router->add('/kelas/user', ['controller' => 'kelas', 'action' => 'user']);
 
+$router->add('/user/changepass', ['controller' => 'user', 'action' => 'changepass']);
+$router->add('/user/changepass/submit', ['controller' => 'user', 'action' => 'changepassSubmit']);
 
 
 $router->handle($_SERVER['REQUEST_URI']);
