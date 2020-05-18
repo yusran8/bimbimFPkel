@@ -19,7 +19,12 @@ class Users extends Model
         $this->hasMany(
             'id',
             'Ambil',
-            'siswa'
+            'siswa',
+            // [
+            //     'foreignKey' => [
+            //         'action' => Relation::ACTION_CASCADE,
+            //     ]
+            // ]
             
         );
     }

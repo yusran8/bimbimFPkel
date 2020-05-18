@@ -13,17 +13,17 @@ Class Ambil extends Model{
     public $pengajar;
 
     public function initialize(){
-        // $this->belongsTo(
-        //     'siswa',
-        //     'Users',
-        //     'id'
-        // );
+        $this->belongsTo(
+            'siswa',
+            Users::class,
+            'id'
+        );
 
-        // $this->belongsTo(
-        //     'kelas',
-        //     'Kelas',
-        //     'id'
-        // );
+        $this->belongsTo(
+            'kelas',
+            Kelas::class,
+            'id'
+        );
     }
 
     public function setSiswa($params){

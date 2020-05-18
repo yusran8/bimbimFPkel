@@ -16,7 +16,12 @@ class Kelas extends Model
         $this->hasMany(
             'id',
             'Ambil',
-            'kelas'
+            'kelas',
+            // [
+            //     'foreignKey' => [
+            //         'action' => Relation::ACTION_CASCADE,
+            //     ]
+            // ]
             
         );
     }
