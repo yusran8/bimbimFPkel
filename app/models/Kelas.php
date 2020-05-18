@@ -2,6 +2,7 @@
 
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
+use Phalcon\Mvc\Model\Relation;
 
 class Kelas extends Model
 {
@@ -16,6 +17,7 @@ class Kelas extends Model
             'id',
             'Ambil',
             'kelas'
+            
         );
     }
     

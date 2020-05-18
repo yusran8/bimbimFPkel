@@ -3,6 +3,7 @@
 use Phalcon\Mvc\Model;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness as Uniqueness;
+use Phalcon\Mvc\Model\Relation;
 
 class Users extends Model
 {
@@ -19,6 +20,7 @@ class Users extends Model
             'id',
             'Ambil',
             'siswa'
+            
         );
     }
 

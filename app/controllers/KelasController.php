@@ -131,11 +131,32 @@ class KelasController extends ControllerBase
     }
 
     public function deleteAction($classId){
+        // $conditions2 = ['kelas_id' =>$classId];
+        // $ambil = Ambil::find([
+        //     'conditions' => 'kelas_id=:kelas_id:',
+        //     'bind' => $conditions2,
+        // ]);
+        // $ambil->delete();
+        $ambil = Ambil::find([
+            'kelas_id = ?1',
+            'bind' => [
+                
+                1 => $classId,
+            ],
+        ]);
+        if($ambil->delete()===false){
+            $messages = $ambil->getMessages();
+            foreach ($messages as $message) {
+                $this->flash->error($message);
+            }
+        }
+
         $conditions = ['id'=>$classId];
         $this->kelas = Kelas::findFirst([
             'conditions' => 'id=:id:',
             'bind' => $conditions,
         ]);
+        
         if ($this->kelas->delete() === false) {
             $messages = $this->kelas->getMessages();
             foreach ($messages as $message) {

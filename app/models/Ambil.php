@@ -12,19 +12,19 @@ Class Ambil extends Model{
     public $waktu;
     public $pengajar;
 
-    // public function initialize(){
-    //     $this->belongsTo(
-    //         'siswa',
-    //         'Users',
-    //         'id'
-    //     );
+    public function initialize(){
+        // $this->belongsTo(
+        //     'siswa',
+        //     'Users',
+        //     'id'
+        // );
 
-    //     $this->belongsTo(
-    //         'kelas',
-    //         'Kelas',
-    //         'id'
-    //     );
-    // }
+        // $this->belongsTo(
+        //     'kelas',
+        //     'Kelas',
+        //     'id'
+        // );
+    }
 
     public function setSiswa($params){
         $this->siswa = $params;
