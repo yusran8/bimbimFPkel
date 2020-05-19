@@ -15,27 +15,10 @@ try {
      */
     $di = new FactoryDefault();
 
-    $di->set(
-        'flash',
-        function () {
-            $flash = new FlashDirect(
-                [
-                    'error'   => 'alert alert-danger',
-                    'success' => 'alert alert-success',
-                    'notice'  => 'alert alert-info',
-                    'warning' => 'alert alert-warning',
-                ]
-            );
-
-            return $flash;
-        }
-    );
-
-    // Register the flash service with custom CSS classes
     // $di->set(
-    //     'flashSession',
+    //     'flash',
     //     function () {
-    //         $flash = new FlashSession(
+    //         $flash = new FlashDirect(
     //             [
     //                 'error'   => 'alert alert-danger',
     //                 'success' => 'alert alert-success',
@@ -47,6 +30,23 @@ try {
     //         return $flash;
     //     }
     // );
+
+    //Register the flash service with custom CSS classes
+    $di->set(
+        'flashSession',
+        function () {
+            $flash = new FlashSession(
+                [
+                    'error'   => 'alert alert-danger',
+                    'success' => 'alert alert-success',
+                    'notice'  => 'alert alert-info',
+                    'warning' => 'alert alert-warning',
+                ]
+            );
+
+            return $flash;
+        }
+    );
 
 
     // Start the session the first time when some component request the session service

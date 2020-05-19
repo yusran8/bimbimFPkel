@@ -96,7 +96,19 @@ $di->setShared('modelsMetadata', function () {
 /**
  * Register the session flash service with the Twitter Bootstrap classes
  */
+// $di->set('flashSession', function () {
+//     //$escaper = new Escaper();
+//     $flashSession = new FlashDirect();
+//     //$flash->setImplicitFlush(false);
+//     $flashSession->setCssClasses([
+//         'error'   => 'alert alert-danger',
+//         'success' => 'alert alert-success',
+//         'notice'  => 'alert alert-info',
+//         'warning' => 'alert alert-warning'
+//     ]);
 
+//     return $flashSession;
+// });
 
 $di->set('flashSession', function () {
     //$escaper = new Escaper();
